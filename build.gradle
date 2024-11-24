@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'com.gradleup.shadow' version '8.3.5'
+    id "xyz.jpenilla.run-paper" version "2.3.1"
 }
 
 group = 'com.shalostx'
@@ -15,10 +17,14 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("me.clip:placeholderapi:2.11.6")
+    implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
 }
 
 def targetJavaVersion = 21
@@ -38,6 +44,34 @@ tasks.withType(JavaCompile).configureEach {
         options.release.set(targetJavaVersion)
     }
 }
+
+shadowJar {
+    relocate 'co.aikar.commands', 'com.shalostx.imprison.acf'
+    relocate 'co.aikar.locales', 'com.shalostx.imprison.locales'
+}
+
+tasks {
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.21.1")
+    }
+}
+
+build.dependsOn shadowJar
+
+
+tasks.register("deployPlugin", Copy) {
+    dependsOn shadowJar // Убедитесь, что shadowJar выполняется до копирования
+    from(shadowJar.archiveFile.get().asFile) // Берем JAR-файл shadowJar
+    into("D:/1.21.1/plugins") // Указываем папку, куда копировать плагин
+}
+
+tasks.build {
+    finalizedBy tasks.deployPlugin // После сборки вызывается deployPlugin
+}
+
 
 processResources {
     def props = [version: version]

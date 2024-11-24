@@ -3,6 +3,7 @@ version: '1.0-Alpha'
 main: com.shalostx.imprison.Imprison
 api-version: '1.21'
 prefix: Imprison
+softdepend: ["PlaceholderAPI"]
 authors: [ Shalostx ]
 description: Essential plugin for enhancing the Minecraft Prison experience with unique features and gameplay mechanics.
 website: https://t.me/iamhine
