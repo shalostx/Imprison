@@ -7,7 +7,7 @@ import com.shalostx.imprison.database.SQLManager;
 import com.shalostx.imprison.events.BlockBreaking;
 import com.shalostx.imprison.events.PlayerLeveling;
 import com.shalostx.imprison.placeholders.BlockStatPlaceholder;
-import com.shalostx.imprison.placeholders.TestPlaceholder;
+import com.shalostx.imprison.placeholders.PlayerLevelPlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,7 +29,7 @@ public final class Imprison extends JavaPlugin {
         // Регистрация PlaceholderAPI
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new BlockStatPlaceholder(sqlManager, this).register();
-            new TestPlaceholder().register();
+            new PlayerLevelPlaceholder(sqlManager, this).register();
         }
 
         // ACF Init

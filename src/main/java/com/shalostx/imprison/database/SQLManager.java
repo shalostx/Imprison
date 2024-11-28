@@ -1,7 +1,6 @@
 package com.shalostx.imprison.database;
 
 import org.bukkit.Bukkit;
-import org.bukkit.block.data.type.RedstoneWire;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
