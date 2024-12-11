@@ -18,6 +18,8 @@ public final class Imprison extends JavaPlugin {
     @Override
     public void onEnable() {
         // Путь к папке данных плагина
+
+
         String dataFolderPath = getDataFolder().getAbsolutePath();
 
         // Создание SQLManager
